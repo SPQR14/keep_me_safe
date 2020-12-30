@@ -197,8 +197,7 @@ unsigned char gf_mul[256][6] = {
 // Also performs the job of InvAddRoundKey(); since the function is a simple XOR process,
 // it is its own inverse.
 
-void AddRoundKey(unsigned char state[][4], unsigned int w[])
-{
+void AddRoundKey(unsigned char state[][4], unsigned int w[]){
     unsigned char subkey[4];
     // memcpy(subkey,&w[idx],4); // Not accurate for big endian machines
     // Subkey 1
@@ -245,15 +244,13 @@ void AddRoundKey(unsigned char state[][4], unsigned int w[])
 
 // Performs the SubBytes step. All bytes in the state are substituted with a
 // pre-calculated value from a lookup table.
-void SubBytes(unsigned char state[][4])
-{
+void SubBytes(unsigned char state[][4]){
     for(int i = 0; i < 4; i++)
         for(int j= 0; j < 4; j++)
             state[i][j] = aes_sbox[state[i][j] >> 4][state[i][j] & 0x0F];
 }
 
-void InvSubBytes(unsigned char state[][4])
-{
+void InvSubBytes(unsigned char state[][4]){
     for(int i = 0; i < 4; i++)
         for(int j= 0; j < 4; j++)
             state[i][j] = aes_invsbox[state[i][j] >> 4][state[i][j] & 0x0F];
@@ -265,8 +262,7 @@ void InvSubBytes(unsigned char state[][4])
  */
 
 // Performs the ShiftRows step. All rows are shifted cylindrically to the left.
-void ShiftRows(unsigned char state[][4])
-{
+void ShiftRows(unsigned char state[][4]){
     int t;
     // Shift left by 1
     t = state[1][0];
@@ -290,8 +286,7 @@ void ShiftRows(unsigned char state[][4])
 }
 
 // All rows are shifted cylindrically to the right.
-void InvShiftRows(unsigned char state[][4])
-{
+void InvShiftRows(unsigned char state[][4]){
     int t;
     // Shift right by 1
     t = state[1][3];
@@ -322,8 +317,7 @@ void InvShiftRows(unsigned char state[][4])
 // multiplication in a Galios Field 2^8. All multiplication is pre-computed in a table.
 // Addition is equivilent to XOR. (Must always make a copy of the column as the original
 // values will be destoyed.)
-void MixColumns(unsigned char state[][4])
-{
+void MixColumns(unsigned char state[][4]){
     unsigned char col[4];
     // Column 1
     col[0] = state[0][0];
@@ -412,8 +406,7 @@ void MixColumns(unsigned char state[][4])
 }
 
 
-void InvMixColumns(unsigned char state[][4])
-{
+void InvMixColumns(unsigned char state[][4]){
     //int idx;
     unsigned char col[4]; //int t;
     // Column 1
@@ -507,8 +500,7 @@ void InvMixColumns(unsigned char state[][4])
  */
 
 // This prints the "state" grid as a linear hex string
-void printstate(unsigned char state[][4])
-{
+void printstate(unsigned char state[][4]){
     int idx,idx2;
     for (idx=0; idx < 4; idx++)
         for (idx2=0; idx2 < 4; idx2++)
@@ -517,8 +509,7 @@ void printstate(unsigned char state[][4])
 }
 
 // This prints the key (4 consecutive ints) used for a given round as a linear hex string.
-void print_rnd_key(unsigned int key[])
-{
+void print_rnd_key(unsigned int key[]){
     int idx;
     for (idx=0; idx < 4; idx++)
         printf("%08x",key[idx]);
@@ -531,8 +522,7 @@ void print_rnd_key(unsigned int key[])
 
 // Performs the SubWord substitution for KeyExpansion. Each byte in the supplied integer
 // is looked up in the substitution box and replaced by its corresponding value.
-unsigned int SubWord(unsigned int word)
-{
+unsigned int SubWord(unsigned int word){
     unsigned int result;
 
     result = (int)aes_sbox[(word >> 4) & 0x0000000F][word & 0x0000000F];
@@ -549,8 +539,7 @@ unsigned int SubWord(unsigned int word)
 // Performs the action of generating the keys that will be used in every round of
 // encryption. "key" is the user-supplied input key, "w" is the output key schedule,
 // "keysize" is the length in bits of "key", must be 128, 192, or 256.
-void KeyExpansion(unsigned char key[], unsigned int w[], int keysize)
-{
+void KeyExpansion(unsigned char key[], unsigned int w[], int keysize){
     int Nb=4,Nr,Nk,idx;
     unsigned int temp,Rcon[]={0x01000000,0x02000000,0x04000000,0x08000000,0x10000000,0x20000000,
                               0x40000000,0x80000000,0x1b000000,0x36000000,0x6c000000,0xd8000000,
@@ -584,8 +573,7 @@ void KeyExpansion(unsigned char key[], unsigned int w[], int keysize)
 // "in" is the block of 16 sequencial bytes that is to be encrypted. "out" is the encrypted
 // sequencial output. "key" is an array consisting of the KEY value that was generated
 // using KeySchedule() previously. "keysize" MUST be 128, 192, 256 in size.
-void aes_encrypt(unsigned char in[], unsigned char out[], unsigned int key[], int keysize)
-{
+void aes_encrypt(unsigned char in[], unsigned char out[], unsigned int key[], int keysize){
     unsigned char state[4][4];
     int rounds;
     // Copy input array (should be 16 bytes long) to a matrix (sequential bytes are ordered
@@ -594,15 +582,16 @@ void aes_encrypt(unsigned char in[], unsigned char out[], unsigned int key[], in
     // column, then row. Accessing an element in C requires row then column. Thus, all state
     // references in AES must have the column and row indexes reversed for C implementation.
 
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            state[j][i] = in[4*i+j];
+    for(int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            state[j][i] = in[4 * i + j];
+        }
+    }
 
     // Perform the necessary number of rounds. The round key is added first.
     // The last round does not perform the MixColumns step.
     AddRoundKey(state,&key[0]);
-    switch (keysize)
-    {
+    switch (keysize){
         case 128:
             rounds = 10;
         case 192:
@@ -613,8 +602,7 @@ void aes_encrypt(unsigned char in[], unsigned char out[], unsigned int key[], in
             break;
     }
 
-    for(int i = 1; i < rounds; i++)
-    {
+    for(int i = 1; i < rounds; i++){
         SubBytes(state);
         ShiftRows(state);
         MixColumns(state);
@@ -626,14 +614,15 @@ void aes_encrypt(unsigned char in[], unsigned char out[], unsigned int key[], in
 
 
     // Copy the state to the output array
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            out[4*i+j] = state[j][i];
+    for(int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            out[4 * i + j] = state[j][i];
+        }
+    }
 
 }
 
-void aes_decrypt(unsigned char in[], unsigned char out[], unsigned int key[], int keysize)
-{
+void aes_decrypt(unsigned char in[], unsigned char out[], unsigned int key[], int keysize){
     unsigned char state[4][4];
     // Copy the input to the state.
     for(int i = 0; i < 4; i++)
@@ -647,14 +636,12 @@ void aes_decrypt(unsigned char in[], unsigned char out[], unsigned int key[], in
             AddRoundKey(state,&key[56]);
             InvShiftRows(state);InvSubBytes(state);AddRoundKey(state,&key[52]);InvMixColumns(state);
             InvShiftRows(state);InvSubBytes(state);AddRoundKey(state,&key[48]);InvMixColumns(state);
-        }
-        else {
+        }else {
             AddRoundKey(state,&key[48]);
         }
         InvShiftRows(state);InvSubBytes(state);AddRoundKey(state,&key[44]);InvMixColumns(state);
         InvShiftRows(state);InvSubBytes(state);AddRoundKey(state,&key[40]);InvMixColumns(state);
-    }
-    else {
+    }else {
         AddRoundKey(state,&key[40]);
     }
     InvShiftRows(state);InvSubBytes(state);AddRoundKey(state,&key[36]);InvMixColumns(state);
@@ -669,8 +656,9 @@ void aes_decrypt(unsigned char in[], unsigned char out[], unsigned int key[], in
     InvShiftRows(state);InvSubBytes(state);AddRoundKey(state,&key[0]);
 
     // Copy the state to the output array
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++)
-            out[4*i+j] = state[j][i];
-
+    for(int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            out[4 * i + j] = state[j][i];
+        }
+    }
 }

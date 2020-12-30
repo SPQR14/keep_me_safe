@@ -17,8 +17,7 @@ Output should be:
 4bf3b0a69aeb6657794f2901b1440ad4
 */
 
-int main()
-{
+int main(){
     // This is one set of test vectors. Plaintext1 should encrypt to ciphertext1 using
     // key1 and the ciphertext1 should decrypt to the plaintext1 using key1.
     unsigned char plaintext[16]={0x00,0x11,0x22,0x33,0x44,0x55,0x66,0x77,
