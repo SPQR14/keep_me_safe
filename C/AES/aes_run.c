@@ -7,7 +7,7 @@
  */
 
 #include <stdio.h>
-#include "aes.h"
+#include "AES/aes.h"
 
 /*
 Output should be:
