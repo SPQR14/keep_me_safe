@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2020.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\keep_me_safe.dir/objects.a
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe cr CMakeFiles\keep_me_safe.dir/objects.a @CMakeFiles\keep_me_safe.dir\objects1.rsp
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe -g   -Wl,--whole-archive CMakeFiles\keep_me_safe.dir/objects.a -Wl,--no-whole-archive  -o keep_me_safe.exe -Wl,--out-implib,libkeep_me_safe.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\keep_me_safe.dir\linklibs.rsp

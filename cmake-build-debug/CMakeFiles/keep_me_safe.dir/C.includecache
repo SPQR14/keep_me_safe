@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/Desarrollo/keep_me_safe/C/enciption.c
+enciption.h
+D:/Desarrollo/keep_me_safe/C/enciption.h
+stdio.h
+-
+
+D:/Desarrollo/keep_me_safe/C/enciption.h
+
