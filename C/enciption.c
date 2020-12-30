@@ -6,6 +6,8 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]){
-    printf("hola mundo");
+    float f = 0.0f;
+    printf("hola mundo\n");
+    scanf("%f", &f);
     return 0;
 }
