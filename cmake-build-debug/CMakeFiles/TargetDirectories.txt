@@ -1,3 +1,0 @@
-D:/Desarrollo/keep_me_safe/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-D:/Desarrollo/keep_me_safe/cmake-build-debug/CMakeFiles/keep_me_safe.dir
-D:/Desarrollo/keep_me_safe/cmake-build-debug/CMakeFiles/edit_cache.dir
