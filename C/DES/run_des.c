@@ -13,6 +13,7 @@
  * generate_key, generate_sub_keys, process_message, ENCRYPTION_MODE, DECRYPTION_MODE
  *
  */
+/*
 #include "des.h"
 
 // Declare file handlers
@@ -185,3 +186,4 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+*/
